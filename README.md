@@ -2,7 +2,7 @@
 
 1. Clone este repositório dentro de {catkin_workspace}/src/
 
-2. Instale dependências com "rosdep"
+2. Verifique se há dependências e instale com "rosdep"
 
 3. Compile os sources com "cd {catkin_workspace} && catkin_make"
 
