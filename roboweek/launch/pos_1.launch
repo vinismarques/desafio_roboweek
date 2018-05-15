@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="name" default="" />
+  <arg name="ns" default="/$(arg name)" />
+  <arg name="urdf" default="$(find amr_robots_description)/urdf/pioneer3at.urdf" />
+  
+  <!-- Parametros da posicao 1 -->
+  <arg name="x" default="-3.38" />
+  <arg name="y" default="1.64" />
+  <arg name="z" default="0.18" />
+  <arg name="yaw" default="-1.57" />
+
+<!-- Inicia o mundo no gazebo -->
+<include file="$(find amr_robots_gazebo)/rescue_world.launch" />
+
+  <group ns="$(arg ns)">
+
+    <!-- Da spawn no robo na posicao 1 -->
+    <include file="$(find amr_robots_gazebo)/spawn-pioneer3at.launch">
+      <arg name="urdf" value="$(arg urdf)" />
+      <arg name="x" value="$(arg x)" />
+      <arg name="y" value="$(arg y)" />
+      <arg name="z" value="$(arg z)" />
+      <arg name="yaw" value="$(arg yaw)" />
+      <arg name="name" default="$(arg name)" />
+    </include>
+
+    <!-- Inicia o nodo da equipe -->
+    <node pkg="roboweek" type="roboweek_node" name="roboweek_node" output="screen" />
+  
+  </group>
+
+</launch>
