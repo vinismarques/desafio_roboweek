@@ -4,7 +4,7 @@
 
 2. Verifique se há dependências e instale com "rosdep"
 
-3. Compile os sources com "cd {catkin_workspace} && catkin_make"
+3. Compile com "cd {catkin_workspace} && catkin_make"
 
 4. Execute com "roslaunch roboweek pos_1.launch" para iniciar o robô na posição 1 ou "roslaunch roboweek pos_2.launch" para iniciar na posição 2 
 
