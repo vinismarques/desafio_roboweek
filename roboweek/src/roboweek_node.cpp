@@ -57,6 +57,7 @@ int main(int argc, char** argv)
     ros::Rate loop_rate(20);
 
     // Declaracoes
+    double goalx=-4.1 ,goaly=3.6; // Posição aproximada da pessoa
     double v1=0.0, v2=0.0;  // Velocidades v1=linear v2=angular
     double oriRad, oriGraus; // Orientacao em radianos e em graus
 
