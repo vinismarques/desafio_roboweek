@@ -11,23 +11,31 @@
 #include <tf/transform_datatypes.h>
 
 //Variaveis Globais Para Leitura de Dados
-nav_msgs::Odometry current_pose;
 sensor_msgs::LaserScan current_laser;
+geometry_msgs::Quaternion orientacao;
+geometry_msgs::Point posicao;
+
+bool laserPronto = false,
+     posePronto = false;
 
 //Funcao Callback do Laser
 void lasercallback(const sensor_msgs::LaserScan::ConstPtr& laser)
 {
 	current_laser = *laser;
+    laserPronto = true;
 
-	return;
+    return;
 }
 
 //Funcao Callback da Pose
 void posecallback(const nav_msgs::Odometry::ConstPtr& pose)
 {
-        current_pose = *pose;
 
-	return;
+    posicao = pose->pose.pose.position; // Posicao em x y z
+    orientacao = pose->pose.pose.orientation; // Orientacao em z
+    posePronto = true;
+
+    return;
 }
 
 
@@ -45,27 +53,39 @@ int main(int argc, char** argv)
     ros::Subscriber sub = n.subscribe("scan", 10, lasercallback);
     ros::Subscriber sub1 = n.subscribe("ground_truth", 10, posecallback);
 
-    // Define a frequencia do no
+    // Define a frequencia do loop
     ros::Rate loop_rate(20);
 
     // Declaracoes
-    geometry_msgs::Twist speed_create;  // Comando de Velocidade
-    double v1=0.0, v2=0.0;              // Velocidades. v1: vel linear. v2: vel angular
+    double v1=0.0, v2=0.0;  // Velocidades v1=linear v2=angular
+    double oriRad, oriGraus; // Orientacao em radianos e em graus
 
-    // Evita ler dados do sensor antes dele ter sido inicializado
-    sleep(1); // Aguarda 1 seg antes de iniciar
-    ros::spinOnce();
+    // Aguarda a primeira mensagem de cada sensor para evitar erros
+    while (ros::ok() && !laserPronto && !posePronto)
+    {
+        ros::spinOnce();
+        loop_rate.sleep();
+    }
 
     //Loop Principal. Executa enquanto o roscore estiver 'ok'
     while(ros::ok()) 
     {
-        // Seu codigo vai aqui
-	ROS_INFO("Seu codigo esta sendo executado."); // Printa a string, similar ao printf
+        // Calcula orientacao tanto em graus quanto radianos
+        oriRad = tf::getYaw(orientacao);
+        oriGraus = oriRad * 180.0 / M_PI;
+
+        /* SEU CODIGO VAI AQUI */
+        ROS_INFO("Seu codigo esta sendo executado."); // Printa a string, similar ao printf
+        ROS_INFO("rad=%lg graus=%lg", oriRad, oriGraus); 
+
+
 
         // Envia Sinal de Velocidade
-        speed_create.linear.x=v1;
-        speed_create.angular.z=v2;
-        vel_pub.publish(speed_create);
+        geometry_msgs::Twist vel;
+
+        vel.linear.x=v1;
+        vel.angular.z=v2;
+        vel_pub.publish(vel);
         ros::spinOnce();
         loop_rate.sleep();
     }

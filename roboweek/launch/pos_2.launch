@@ -4,7 +4,7 @@
   <arg name="ns" default="/$(arg name)" />
   <arg name="urdf" default="$(find amr_robots_description)/urdf/pioneer3at.urdf" />
   
-  <!-- Parametros da posicao 2 -->
+  <!-- Parametros da posicao 1 -->
   <arg name="x" default="-4.72" />
   <arg name="y" default="0.98" />
   <arg name="z" default="0.18" />
