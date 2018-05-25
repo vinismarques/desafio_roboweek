@@ -22,15 +22,18 @@ O laser possui 270 graus de alcance e suas leituras se dão conforme a figura ab
 
 Após garantir que o ROS está instalado, que um workspace foi criado e ambos tenham sido configurados corretamente (linhas “source .../setup.bash” adicionadas no arquivo ~/.bashrc), siga os seguintes passos para iniciar:
 
-Extraia o conteúdo do arquivo ‘desafio_roboweek_2018.zip’ na pasta “catkin_ws/src”
-Verifique se há dependências faltando e instale-as com o comando:
+1. Extraia o conteúdo do arquivo ‘desafio_roboweek_2018.zip’ na pasta “catkin_ws/src”
+
+2. Verifique se há dependências faltando e instale-as com o comando:
 $ rosdep install -a 
-Compile o código com o comando:
+
+3. Compile o código com o comando:
 $ cd ~/catkin_ws && catkin_make
-Para iniciar na posição 1 execute:
+
+4. Para iniciar na posição 1 execute:
 $ roslaunch roboweek pos_1.launch
-	Ou, para iniciar na posição 2:
-		$ roslaunch roboweek pos_2.launch
+Ou, para iniciar na posição 2:
+$ roslaunch roboweek pos_2.launch
 
 Faça suas modificações no arquivo "desafio_roboweek/roboweek/src/roboweek_node.cpp", recompile o pacote (passo 3) e execute o launch novamente (passo 4).
 
